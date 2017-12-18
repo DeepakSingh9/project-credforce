@@ -1,0 +1,34 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="form-div">
+			<div class="outer">
+				<div class="insideform-div">
+    <h1>New post</h1>
+    <form method="POST" action="" class="post-form" enctype="multipart/form-data">
+        <form method="post">
+    {% csrf_token %}
+    {{form.non_field_errors}}
+
+    <div class="fieldwrappers">
+        {{form.title.errrors}}
+        <label for="{{form.title.id_for_label}}">title:</label>
+        {{form.title}}
+    </div>
+    <div class="fieldwrappers">
+        {{form.text.errrors}}
+        <label for="{{form.text.id_for_label}}">text:</label>
+        {{form.text.help_text}}
+        {{form.text}}
+    </div>
+    <div class="fieldwrappers">
+        {{form.image.errrors}}
+        <label for="{{form.image.id_for_label}}">image:</label>
+        {{form.image}}
+    </div>
+        <button type="submit" class="save btn btn-default">submit</button>
+    </form>
+                </div>
+            </div>
+</div>
+{% endblock %}

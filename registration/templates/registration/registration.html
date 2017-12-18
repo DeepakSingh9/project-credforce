@@ -1,0 +1,33 @@
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    $('#post-form').on('submit',function(event){
+    event.preventDefault();
+    console.log('form ! Submitted')
+    register_user();
+    });
+</script>
+</head>
+<body>
+<div class="login-form">
+    <div class="form">
+        <h2>JOIN HR HUB</h2><br>
+<form class="login-form" action="{% url 'registration' %}" method="POST" id="post-form">
+    {% csrf_token %}
+    <ul>
+
+    <li><input type="password" placeholder="password" name="password"/></li>
+    <li><input type="text" placeholder="first name" name="first_name"/></li>
+    <li><input type="text" placeholder="last name" name="last_name"/></li>
+      <li><input type="email" placeholder="email" name="email"/></li>
+    <li><input type="text" placeholder="designition" name="designation"/></li>
+
+    <li><input type="text" placeholder="organisation" name="organisation"/></li>
+        </ul>
+    <button type="submit" value="save">save my details</button>
+</form>
+    </div>
+</div>
+</body>
+</html>

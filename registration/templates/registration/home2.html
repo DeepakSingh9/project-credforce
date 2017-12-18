@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+{{user.username}}
+
+{% for all in Post.objects.get %}
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<div class="login-page">
+    <div class="banner">
+  <div class="form">
+      <h3>Login</h3>
+      <div class="clear"></div>
+    <!--<form class="login-form" method="post">
+        {% csrf_token %}
+      <input type="text" placeholder="username" name="username"/>
+      <input type="password" placeholder="password" name="password"/>
+      <input type="text" placeholder="first name" name="first_name"/>
+      <input type="text" placeholder="last name" name="last_name"/>
+      <input type="text" placeholder="email" name="email"/>
+      <input type="text" placeholder="mobile" name="mobile">
+        <input type="text" placeholder="designation" name="designation"/>
+        <input type="text" placeholder="organisation" name="organisation"/>
+
+      <button type="submit">create</button>
+      <p class="message">Already registered? <a href="javascript:void(0)">Sign In</a></p>
+    </form>-->
+      {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</ul>
+{% endif %}
+    <form class="login-form" method="post">
+        {% csrf_token %}
+        <ul>
+     <li> <input type="text" placeholder="username" name="username"/></li>
+     <li><input type="password" placeholder="password" name="password"/></li>
+        {{userlogin.errors.password}}
+            <li class="checkline"><input type="checkbox"/><p>Remember Me</p></li>
+            </ul>
+      <button type="submit">login</button>
+      <p class="message">Not registered? <a href="{% url 'registration' %}">Create an account</a></p>
+    </form>
+  </div>
+        </div>
+</div>
+<!--<script type="text/javascript" src="../../static/js/jquery-3.2.1.min.js"></script>
+<script>
+
+ $('.message a').click(function(){
+   $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+</script>-->
+
+{% endblock %}

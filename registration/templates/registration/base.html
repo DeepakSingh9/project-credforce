@@ -1,0 +1,139 @@
+{% load staticfiles %}
+<html>
+<head>
+<meta charset="utf-8">
+<title>{% block title %}{% endblock %}</title>
+<!--for shortcut icon-->
+<link rel="icon" href="#" type="image/x-icon" />
+<link rel="shortcut icon" href="#" type="image/x-icon" />
+<link rel="apple-touch-icon" href="#" />
+<link href="/static/css/blog.css" type="text/css" rel="stylesheet">
+
+<style>
+	.pop-modal-box .headingExm h4{margin-top: -10px;color: #107caa;}
+</style>
+
+</head>
+<body>
+
+<header>
+<div class="outer">
+		<div class="logo"><a href="/"><img src="/../static/images/logo.png"></a></div>
+{% if user.is_authenticated %}
+	<div class="my-profile">
+		<div class="search-left">
+			<ul>
+			<form>
+				<input data-val="true" data-val-length="" data-val-length-max="40" data-val-length-min="1"  name="Search" placeholder="Search here..." value="" type="text">
+			</form>
+				<li><a class="search" href="" title="Login"><i class="fa fa-search"></i></a></li>
+			</ul>
+		</div>
+
+		<div class="search-right">
+			<ul>
+				<li><a class="request" href="" title="Login"><i class="fa fa-user"></i></a></li>
+				<li><a class="profile" href="" title="profile"><i class="fa fa-envelope"></i></a></li>
+				<li><a class="message" href="" title="Login"><i class="fa fa-bell"></i></a></li>
+				<li><a class="notification" href="{%url 'logout' %}" title="My Profile">Log Out</a></li>
+			</ul>
+		</div>
+		</div>
+{% else %}
+		<div class="login-pannel">
+        <ul>
+        	<li><a class="smallbtn pop-btn" href="{% url 'login'%}"   title="Login">Login</a></li>
+
+
+
+        </ul>
+		</div>
+{% endif%}
+</div>
+<div class="clear"></div>
+</header>
+
+
+<section class="home">
+	{% block content %}
+	{% endblock %}
+<div class="clear"></div>
+
+
+<!--------Author Section Begin------->
+	<div class="footer">
+		<div class="outer">
+			<div class="copyright-line">
+				<div class="copyright-left"> Terms of Use & Privacy</div>
+				<div class="copyright-right">Copyright © 2017 DASCA. All rights reserved.</div>
+
+			</div>
+		</div>
+	</div>
+<!--------Author Section End--------->
+
+<!--<div id="popup1" class="pop-modal-box">
+  <header class="headingExm"> <a href="#" class="js-modal-close close">×</a>
+    <h4>Login Form</h4>
+  </header>
+  <div class="modal-body str">
+ 			<div class="popup-box">
+                <form name="login" action="" method="post">
+					{% csrf_token %}
+                    <div class="row-block">
+                        <input name="username" size="14" placeholder="Enter User id*" required="" type="text">
+                    </div>
+                    <div class="row-block">
+                        <input name="password" size="14" placeholder="Enter Password*" required="" type="password">
+                    </div>
+                   <div class="row-block">
+                   <button href="" class="log-btn" title="Signup Now">Signup Now</button>
+                   </div>
+                </form>
+            </div>
+
+  </div>
+
+</div>-->
+
+
+</section>
+
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+$(function(){
+
+var appendthis =  ("<div class='modal-overlay js-modal-close'></div>");
+
+	$('a[data-modal-id]').click(function(e) {
+		e.preventDefault();
+    $("body").append(appendthis);
+    $(".modal-overlay").fadeTo(500, 0.7);
+    //$(".js-modalbox").fadeIn(500);
+		var modalBox = $(this).attr('data-modal-id');
+		$('#'+modalBox).fadeIn($(this).data());
+	});
+
+
+$(".js-modal-close, .modal-overlay").click(function() {
+    $(".pop-modal-box, .modal-overlay").fadeOut(500, function() {
+        $(".modal-overlay").remove();
+    });
+
+});
+
+$(window).resize(function() {
+    $(".pop-modal-box").css({
+        top: ($(window).height() - $(".pop-modal-box").outerHeight()) / 2,
+        left: ($(window).width() - $(".pop-modal-box").outerWidth()) / 2
+    });
+});
+
+$(window).resize();
+
+});
+</script>
+
+</body>
+</html>
