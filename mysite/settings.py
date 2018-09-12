@@ -25,7 +25,7 @@ SECRET_KEY = 'or%v#1=xh*y_x9glz=*real)+)l7gk@1npixv8#1_2l+0nbi()'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dscript.pythonanywhere.com']
 
 
 # Application definition
@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'registration',
-    
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+
 
 
 
@@ -53,7 +55,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
+
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -69,8 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+
             ],
         },
     },
@@ -128,9 +129,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT=os.path.join(BASE_DIR,STATIC_URL)
+STATIC_ROOT='/var/www/static/static'
 
 MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,MEDIA_URL)
+MEDIA_ROOT='/var/www/static/media'
+
+EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend'
+
+EMAIL_FILE_PATH=os.path.join('BASE_DIR',"sent_emails")
 
 
+
+SITE_ID = 1

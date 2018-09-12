@@ -1,138 +1,93 @@
 {% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}{{user.username}}{% endblock %}
-
-<!--<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Document</title>
-<!--for shortcut icon
-<link rel="icon" href="#" type="image/x-icon" />
-<link rel="shortcut icon" href="#" type="image/x-icon" />
-<link rel="apple-touch-icon" href="#" />
-<link href="css/Style.css" type="text/css" rel="stylesheet">
-<script src="js/jquery.js"></script>
-<script src="js/accordion.js"></script>
-
-</head>-->
-
 {% block content %}
 
-<!--<header>
+<!--------Slide Section Begin--------->
 <div class="outer">
-		<div class="logo"><a href="#"><img src="images/logo.png"></a></div>
-
-		<div class="my-profile">
-		<div class="search-left">
-			<ul>
-			<form>
-				<input data-val="true" data-val-length="" data-val-length-max="40" data-val-length-min="1"  name="Search" placeholder="Search here..." value="" type="text">
-			</form>
-				<li><a class="search" href="" title="Login"><i class="fa fa-search"></i></a></li>
-			</ul>
-		</div>
-
-		<div class="search-right">
-			<ul>
-				<li><a class="request" href="" title="Login"><i class="fa fa-user"></i></a></li>
-				<li><a class="profile" href="" title="profile"><i class="fa fa-envelope"></i></a></li>
-				<li><a class="message" href="" title="Login"><i class="fa fa-bell"></i></a></li>
-				<li><a class="notification" href="" title="My Profile">My Profile</a></li>
-			</ul>
-		</div>
-		</div>
-</div>
-<div class="clear"></div>
-</header>-->
-
-
-<section class="home">
-<!--------post Section Begin------->
-
-		<div class="outer">
-
-
-			<div class="user-maindesc">
-				{% if user.profile.profile_image %}
+<div class="feedpage">
+<div class="left">
+<div class="user-banner">
+<div class="left">
+{% if user.profile.profile_image %}
 <img src="{{user.profile.profile_image.url}}">
 				{% else %}
 					<img src="/../static/images/author.jpg">
 					{% endif %}
-<div class="maindesc">
-<div class="title">
-<span class="name">{{user.first_name}}</span>
-<a class="link" href="{% url 'follow' pk=user.id %}">Follow</a>
-<p>{{user.profile.designation}}, {{user.profile.organisation}}</p>
+<p><b>{{user.first_name}}</b></p>
 </div>
-<p>Author of novels TOUCH and I AM HAVING SO MUCH FUN HERE WITHOUT YOU. Lover of caftans and intelligence. Product namer for MAC.</p>
-<span class="date">Dec 13,2017</span>
-<div class="clear"></div>
-</div>
-<div class="clear"></div>
-</div>
-<div class="clear"></div>
+<div class="right">
 
-<div class="feedpage">
-<div class="left">
-<h2>YOUR FEED</h2>
+<div class="nomb">
+<span>0</span>
+<p>Followers</p>
+</div>
+<div class="nomb">
+	<span>8</span>
+	<p>Following</p>
+</div>
+</div>
+<div class="clear"></div>
+<div class="navlinks">
+<ul>
+<li class="active">
+<a href="#">Feeds</a>
+</li>
+<li>
+<a href="{% url 'blog_published' pk=user.pk %}">Blogs Published</a>
+</li>
+</ul>
+</div>
+</div>
 
+<div class="write-feed">
+	<form method="POST" action="{% url 'smallpost' %}">
+		{% csrf_token %}
+        <textarea name="text" placeholder="What's on your mind?" ></textarea>
+		<input type="submit" class="btn" value="Post">
+	</form>
+<a href="{%url 'post_new' %}" class="link">Write an article</a>
+
+<div class="clear"></div>
+</div>
+<br /><br />
+<h2>YOUR FEEDS</h2>
 	{% for post in posts %}
 <div class="feedlist">
 <div class="feed-img">
 <img src="{{post.image.url}}" />
-<div class="feed-cat">Technology</div>
+<div class="feed-cat">{{post.category}}</div>
 </div>
 <div class="feeddesc">
 <div class="feed-date">{{post.published_date}}</div>
 <h3><a href="{% url 'post_detail' slug=post.slug pk=post.pk %}">{{post.title}}</a></h3>
-<h5>Posted by <span>{{post.author.first_name}}</span> - {{post.author.profile.designation}}</h5>
-<p>{{post.text|truncatewords:25}}</p>
-<a href="{% url 'post_detail' slug=post.slug pk=post.pk %}" class="link">Read More</a>
-
-				<div class="post-author">
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-thumbs-up"> 30</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-thumbs-down"> 7</i></a></span>
-
-								<span><a class="icon-info" href="" title="like"><i class="fa fa-envelope"> 12</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-reply"> 3</i></a></span>
-						</div>
-
+<h5>POSTED BY <span>{{post.author.first_name}}</span> - {{post.author.profile.designation}}</h5>
+<p>{{post.text|truncatewords:15}}</p>
+<a href="{% url 'post_detail' slug=post.slug pk=post.pk %}" class="btn">Read More</a>
 </div>
 </div>
-	{% endfor %}
 <div class="clear"></div>
+{% endfor %}
 </div>
 
-	<div class="right">
-<div class="write-feed">
-<h4>Share your Opinion</h4>
-<textarea placeholder="What's on your mind?" name="txtArea" ></textarea>
-<a href="{%url 'post_new' %}" class="simplelink">Write an article</a>
-<a href="#" class="simplelink">Images</a>
-<a href="#" class="btn" value="Add Post">Post</a>
-<div class="clear"></div>
-</div>
+<div class="right">
+
 <div class="clear"></div>
 <div class="pop-author">
 <h4>Most Popular Authors</h4>
-
 <ul>
 	{% for user in alluser %}
-
-
-
 <li>
 <img src="{{user.profile.profile_image.url}}" />
 <div class="pop-auth-desc">
-<span class="design">Associate</span>
+<span class="design">{{user.profile.designation}}</span>
 <div class="clear"></div>
-<a href="{% url 'account' pk=user.pk %}" class="link"><p class="name">{{user.first_name}}</p></a>
+	<a href="{% url 'account' pk=user.pk %}" class="link"><p class="name">{{user.first_name}}</p></a>
 <div class="clear"></div>
-<span class="no-post">12 Posts</span>
+<span class="no-post">{{user.post_set.count}} Post</span>
 </div>
 </li>
-	{% endfor%}
+		{% endfor%}
 
 </ul>
 
@@ -143,257 +98,19 @@
 <div class="categories">
 <h4>Categories</h4>
 <ul>
-<li><a href="#"><div class="catnum">7</div><p>Entertainment</p></a></li>
-<li><a href="#"><div class="catnum">7</div><p>Fashion</p></a></li>
-<li><a href="#"><div class="catnum">7</div><p>Food & Drinks</p></a></li>
-<li><a href="#"><div class="catnum">7</div><p>Entertainment</p></a></li>
-<li><a href="#"><div class="catnum">7</div><p>Technology</p></a></li>
-<li><a href="#"><div class="catnum">7</div><p>Entertainment</p></a></li>
+	{% for category in categories %}
+<li><a href=''><p>{{category.category_name}}</p></a></li>
+	{% endfor %}
+
 </ul>
 <div class="clear"></div>
 </div>
 <div class="clear"></div>
 
 </div>
-	<div class="clear"></div>
+<div class="clear"></div>
+</div>
 </div>
 
-<!--
-
-			<div class="add-post">
-
-			<div class="left">
-{% if user.is_authenticated %}
-				<a href="{%url 'account' pk=user.pk %}">ALL FEEDS</a>
-				{% endif %}
-			<div class="userprofile">
-				{% if user.profile.profile_image %}
-				<a class="message profile-align" href="" title="Login"><img src="{{user.profile.profile_image.url}}"></a>
-
-				{% else %}
-				<a class="message profile-align" href="" title="Login"><img src="../../static/images/blankprofile.jpg"></a>
-
-				{% endif %}
-				<span class="user-name">
-				{{user.fist_name}}<br>
-				{{user.profile.designation}}</span>
-				<div class="clear"></div>
-			</div>
-			</div>
-
-			<div  class="right">
-				<h3></h3>
-			</div>
-
-			<div class="clear"></div>
-
-		</div>
-
-
-		</div>
-
-
-
-	<div class="admin">
-		<div class="outer">
-
-
-			<div class="posts">
-			<form class="adPost">
-			<textarea name="txtArea" placeholder="What's on your mind?"></textarea><br>
-				<div class="adlinks">
-						<span><a href="{%url 'post_new' %}">Write an article</a></span>
-						<span><a href="#">Photos</a></span>
-						<span><a href="#">Videos</a></span>
-						<input type="button" value="Add Post">
-				</div>
-				<div class="clear"></div>
-			</form>
-
-			<div class="clear"></div>
-			<div class="right-side2"><h4>Your Feed:</h4></div>
-			<div class="clear"></div>
-            {% for post in posts %}
-			<div class="right-side3">
-				<div class="tag-info">
-					<div class="left-info">
-						<div class="userprofile">
-				<a class="message profile-align" href="{% url 'account' pk=post.author.pk %}" title="Login"><img src="{{post.author.profile.profile_image.url}}"></a>
-
-				<span class="user-name"><a href="{% url 'account' pk=post.author.pk %}">
-				{{post.author.first_name}}</a><br>
-				{{post.author.profile.designation}}</span>
-				<div class="clear"></div>
-			</div>
-					</div>
-					<div class="date-info"><span class="date">{{post.published_date}}</span></div>
-				</div>
-				<div class="clear"></div>
-					<ul>
-						<li>
-						<div class="postfig">
-						  <img src="{{post.image.url}}" alt="">
-						</div>
-
-						<div class="posts-content">
-							<a href="{% url 'post_detail' slug=post.slug pk=post.pk %}"><h3>{{post.title}}</h3></a>
-							<p>{{post.text|truncatewords:50}}
-							<a class="bottom-link" href="{% url 'post_detail' slug=post.slug pk=post.pk %}" title="Read more" tmp_title="Read more">Read more</a>
-							</p>
-
-
-						<div class="post-author">
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-thumbs-up"> 30</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-thumbs-down"> 7</i></a></span>
-
-								<span><a class="icon-info" href="" title="like"><i class="fa fa-envelope"> 12</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-reply"> 3</i></a></span>
-						</div>
-
-						</div>
-						<div class="clear"></div>
-						</li>
-
-
-					</ul>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>
-            {% endfor %}
-			<!--<div class="right-side3">
-			<div class="tag-info">
-					<div class="left-info">
-						<div class="userprofile">
-				<a class="message profile-align" href="" title="Login"><img src="images/author2.jpg"></a>
-				<span class="user-name">
-				Stacy Kerber<br>
-				Sr. Talent Manager</span>
-				<div class="clear"></div>
-			</div>
-					</div>
-					<div class="date-info"><span class="date">24 oct, 2018</span></div>
-				</div>
-				<div class="clear"></div>
-					<ul>
-						<li>
-						<div class="postfig">
-						  <img src="images/activity1-img.jpg" alt="">
-						</div>
-
-						<div class="posts-content">
-							<h3>One of the big four banks of Australia, Westpac has benchmarked its leadership</h3>
-							<p>One of the big four banks of Australia, Westpac has benchmarked its leadership with 50One of the big four banks of Australia, Westpac has benchmarked its leadership with 50...
-							<a class="bottom-link" href="" title="Read more" tmp_title="Read more">Read more</a>
-							</p>
-
-
-						<div class="post-author">
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-thumbs-up"> 30</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-thumbs-down"> 7</i></a></span>
-
-								<span><a class="icon-info" href="" title="like"><i class="fa fa-envelope"> 12</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-reply"> 3</i></a></span>
-						</div>
-
-						</div>
-						<div class="clear"></div>
-						</li>
-
-
-					</ul>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>
-
-			<div class="right-side3">
-			<div class="tag-info">
-					<div class="left-info">
-						<div class="userprofile">
-				<a class="message profile-align" href="" title="Login"><img src="images/author2.jpg"></a>
-				<span class="user-name">
-				Stacy Kerber<br>
-				Sr. Talent Manager</span>
-				<div class="clear"></div>
-			</div>
-					</div>
-					<div class="date-info"><span class="date">24 oct, 2018</span></div>
-				</div>
-				<div class="clear"></div>
-					<ul>
-						<li>
-						<div class="postfig">
-						  <img src="images/activity-img.jpg" alt="">
-						</div>
-
-						<div class="posts-content">
-							<h3>One of the big four banks of Australia, Westpac has benchmarked its leadership</h3>
-							<p>One of the big four banks of Australia, Westpac has benchmarked its leadership with 50One of the big four banks of Australia, Westpac has benchmarked its leadership with 50...
-							<a class="bottom-link" href="" title="Read more" tmp_title="Read more">Read more</a>
-							</p>
-
-
-						<div class="post-author">
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-thumbs-up"> 30</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-thumbs-down"> 7</i></a></span>
-
-								<span><a class="icon-info" href="" title="like"><i class="fa fa-envelope"> 12</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-reply"> 3</i></a></span>
-						</div>
-
-						</div>
-						<div class="clear"></div>
-						</li>
-
-
-					</ul>
-				<div class="clear"></div>
-			</div>
-			<div class="clear"></div>-->
-
-			</div>
-
-
-		<div class="Poastaside">
-
-	<!--------Author Section Begin------->
-	<div class="author">
-
-		<div class="author-left">
-		<h2>Most Popular Authors</h2>
-			<ul>
-               {% for user in alluser %}
-
-				<li><a href="{% url 'account' pk=user.pk %}"><img src="{{user.profile.profile_image.url}}"><span>{{user.first_name}}</span></a></li>
-				{% endfor%}
-			</ul>
-		</div>
-	</div>
-<!--------Author Section End--------->
-
-		</div>
-
-
-
-
-
-
-		</div>
-		<div class="clear"></div>
-	</div>
-<!--------Slide Section End--------->
-
-
-<div class="clear"></div>
-<!--------Author Section Begin------->
-	<!--<div class="footer">
-		<div class="outer">
-			<div class="copyright-line">
-				<div class="copyright-left">Terms of Use & Privacy</div>
-				<div class="copyright-right">Copyright © 2017 DASCA. All rights reserved.</div>
-			</div>
-		</div>
-	</div>-->
-<!--------Author Section End--------->
-</section>
 
 {% endblock %}

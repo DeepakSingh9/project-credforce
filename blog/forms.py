@@ -1,5 +1,5 @@
 from django  import forms
-from .models import Post,Like,Comment
+from .models import Post,Like,Comment,SmallPost
 
 
 
@@ -17,4 +17,11 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment
         fields=('body',)
+
+
+class SmallPostForm(forms.ModelForm):
+
+    class Meta:
+        model=SmallPost
+        fields=('text',)
 

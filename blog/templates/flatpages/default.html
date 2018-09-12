@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+  {% block title %}{{ flatpage.title }}{% endblock %}
+ {% block content %}
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+      </div>
+    </div>
+  </nav>
+  <div class="outer other-page">
+    <h1>{{flatpage.title}}</h1>
+    <p>{{ flatpage.content }}</p>
+  </div>
+</body>
+{% endblock %}

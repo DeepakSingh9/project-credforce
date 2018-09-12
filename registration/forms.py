@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
-from django_countries.widgets import CountrySelectWidget
-from django_countries import countries
+
+
 
 
 class LoginForm(forms.ModelForm):
@@ -19,8 +19,8 @@ class LoginForm(forms.ModelForm):
 class RegistrationForm(forms.ModelForm):
     class Meta:
         model=Profile
-        fields=('designation','organisation','gender',)
-        widgets = {'country': CountrySelectWidget()}
+        fields=('designation','organisation',)
+
 
 
 

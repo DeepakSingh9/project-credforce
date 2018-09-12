@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 from django.utils import timezone
-from tinymce.widgets import TinyMCE
-from tinymce import models as t_m
 from django.template.defaultfilters import slugify
 from django.apps import AppConfig
 
@@ -26,22 +23,15 @@ class Category(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
-    text = t_m.HTMLField()
-    created_date = models.DateTimeField(
+    title = models.CharField(max_length=100)
+    text = models.TextField(max_length=10000)
+    created_date = models.DateField(
             default=timezone.now)
-    published_date = models.DateTimeField(
+    published_date = models.DateField(
             blank=True, null=True)
     image=models.FileField(blank=True,upload_to='blogimages/pic',default='/static/images/blankprofile.jpg')
     category=models.ForeignKey(Category,blank=True,null=True,on_delete=models.CASCADE)
     slug=models.SlugField(null=True,blank=True,max_length=500)
-
-
-
-
-
-
-
 
 
     def save(self,*args,**kwargs):
@@ -49,15 +39,9 @@ class Post(models.Model):
         super(Post, self).save(*args, **kwargs)
 
 
-
-
     def publish(self):
         self.published_date = timezone.now()
         self.save()
-
-
-
-
 
     def __str__(self):
         return self.title
@@ -70,17 +54,15 @@ class Like(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE,related_name='likes')
     created=models.DateTimeField(auto_now_add=True)
 
-
     def __str__(self):
-        return self.like
-
+        return self.post
 
 
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, related_name='comments' , on_delete=models.CASCADE)
-    name = models.ForeignKey(User,on_delete=models.CASCADE,related_name='commented_on')
     body = models.TextField()
+    name=models.ForeignKey(User,related_name='commented_by',on_delete=models.CASCADE,default=1)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -92,13 +74,14 @@ class Comment(models.Model):
 
 
 
-
-
-
 class SmallPost(models.Model):
     writer=models.ForeignKey(User,on_delete=models.CASCADE)
     text=models.TextField(max_length=150)
     created_date=models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return '{} ---->by {}'.format(self.text,self.writer)
 
 
 

@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    fields=['user','designation','organisation','profile_image','followed_by','gender']
+    fields=['user','designation','organisation','profile_image','followed_by']
 
 
 admin.site.register(Profile,ProfileAdmin)

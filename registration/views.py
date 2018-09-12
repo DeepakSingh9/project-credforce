@@ -11,7 +11,8 @@ from blog.models import Post
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
-from django_countries import countries
+from django.utils import timezone
+
 
 
 # Create your views here.
@@ -37,15 +38,14 @@ def user_login(request):
 
 
 
-
-
 def user_registration(request):
     if request.method=='POST':
 
 
         userlogin=LoginForm(request.POST)
         userregister=RegistrationForm(request.POST)
-
+        username=request.POST['username']
+        password=request.POST['password']
 
         if userlogin.is_valid() and userregister.is_valid():
             user=userlogin.save(commit=False)
@@ -54,20 +54,18 @@ def user_registration(request):
 
             profile=userregister.save(commit=False)
             profile.user=user
-            profile.gender=request.POST['gender']
             profile.save()
 
 
             login(request,authenticate(username=userlogin.cleaned_data['username'],password=userlogin.cleaned_data['password']))
             return redirect('profile',pk=user.pk)
         else:
-            messages.error(request,'There is some problem with your account ..already a member??try loging in ')
-
+            messages.error(request,'there is a problem with your account')
 
     else:
         userlogin=LoginForm()
         userregister=RegistrationForm()
-    return render(request,'dashboard/home.html',{'userlogin':userlogin,'userregister':userregister,})
+    return render(request,'blog/post_list.html',{'userlogin':userlogin,'userregister':userregister,})
 
 
 
@@ -111,41 +109,37 @@ def dashboard(request):
 
 
 
-@login_required()
-def followto(request):
-    if request.method=='POST':
-        follow_id=request.POST['follow',False]
-        if follow_id:
-            try:
-                user=User.objects.get(id=follow_id)
-                request.user.profile.follows.add(user.profile)
-            except ObjectDoesNotExist:
-                return redirect('/')
-    return redirect('/')
-
-
 
 @login_required()
 def follow(request,pk):
     author=get_object_or_404(User,id=pk)
-    user=request.user
-    if user.is_authenticated():
-        if user.id != get_object_or_404(User,id=pk):
-            try:
-                author.profile.followed_by.add(user.profile)
-                following = True
-                return redirect('account',pk=author.id)
-            except ObjectDoesNotExist:
-                return HttpResponse('The author you are following has removed the account')
+    viewer=request.user
+    if viewer.is_authenticated():
+        if viewer.id != author.id:
+            author.profile.followed_by.add(viewer.profile)
+            return redirect('account',pk=author.id)
+    return redirect('account',pk=author.id)
 
-    return redirect(request,'/',{})
+
+
+
+@login_required()
+def unfollow(request,pk):
+    author = get_object_or_404(User, id=pk)
+    viewer = request.user
+    if viewer.is_authenticated():
+        author.profile.followed_by.remove(viewer.profile)
+        return redirect('account',pk=author.id)
+    return redirect('account',pk=author.id)
 
 
 
 
 @login_required()
 def account(request,pk):
-    user=get_object_or_404(User,pk=pk)
-    profile=get_object_or_404(Profile,pk=pk)
-    return render(request,'blog/account.html',{'profile':profile,'user':user,})
+    profile_user=get_object_or_404(User,pk=pk)
+    viewer=request.user
+    followers=profile_user.profile.followed_by.all()[:6]
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[:3]
+    return render(request,'blog/account.html',{'viewer':viewer,'profile_user':profile_user,'posts':posts,'followers':followers})
 

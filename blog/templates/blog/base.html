@@ -8,74 +8,113 @@
 <link rel="shortcut icon" href="#" type="image/x-icon" />
 <link rel="apple-touch-icon" href="#" />
 <link href="/static/css/blog.css" type="text/css" rel="stylesheet">
-
-
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/static/jquery-3.2.1.min.js"></script>
+<script src="/static/js/script.js"></script>
 <style>
 	.pop-modal-box .headingExm h4{margin-top: -10px;color: #107caa;}
 </style>
-
 </head>
 <body>
-
-<header class="fixed-header">
+<div class="header">
 <div class="outer">
+<div class="logoleft">
 	{% if user.is_authenticated %}
-		<div class="logo"><a href="{% url 'account' pk=user.pk %}"><img src="/../static/images/logo.png"></a></div>
+	<a href="{% url 'profile' pk=user.pk %}"><img src="/../static/images/hr-logo.png"></a>
 	{% else %}
-	<div class="logo"><a href="/"><img src="/../static/images/logo.png"></a></div>
+	<a href=""><img src="/../static/images/hr-logo.png"></a>
 	{% endif %}
+</div>
+<div class="searchbox">
+<input type="text" />
+<i class="fa fa-search"></i>
+</div>
+<div class="rightsec">
+	{% if user.is_authenticated %}
 
-{% if user.is_authenticated %}
-	<div class="my-profile">
-		<div class="search-left">
-			<ul>
-			<form>
-				<input data-val="true" data-val-length="" data-val-length-max="40" data-val-length-min="1"  name="Search" placeholder="Search here..." value="" type="text">
-			</form>
-				<li><a class="search" href="" title="Login"><i class="fa fa-search"></i></a></li>
-			</ul>
-		</div>
-
-		<div class="search-right">
-			<ul>
-				<li><a class="request" href="" title="Login"><i class="fa fa-user"></i></a></li>
-				<li><a class="profile" href="" title="profile"><i class="fa fa-envelope"></i></a></li>
-				<li><a class="message" href="" title="Login"><i class="fa fa-bell"></i></a></li>
-				<li><a class="notification" href="{%url 'logout' %}" title="My Profile">Log Out</a></li>
-			</ul>
-		</div>
-		</div>
+<div class="userpic">
+	{% if user.profile.profile_image %}
+<a href="{% url 'profile' pk=user.pk %}"><img src="{{user.profile.profile_image.url}}" /></a>
+	{% else %}
+	<a href="{% url 'profile' pk=user.pk %}"><img src="/../static/images/blankprofile.jpg"></a>
+	{% endif %}
+<div class="dropblock">
+<ul class="dropdoen">
+<li>
+<a href="#">Edit</a>
+</li>
+<li class="last">
+<a href="{%url 'logout' %}">Logout</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="icon">
+<i class="fa fa-bell"></i>
+<span class="popnot">5</span>
+</div>
+<div class="icon">
+<i class="fa fa-envelope"></i>
+<span class="popnot">5</span>
+</div>
 {% else %}
-		<div class="login-pannel">
-        <ul>
-        	<li><a class="smallbtn pop-btn" href="{% url 'login'%}"   title="Login">Login</a></li>
+	<a href="{% url 'login'%}" class="btn">Login</a>
+	{% endif%}
+</div>
+	<div class="clear"></div>
 
 
-
-        </ul>
-		</div>
-{% endif%}
+</div>
+	<div class="clear"></div>
 </div>
 <div class="clear"></div>
-</header>
-
-
-<section class="home">
+<div class="body">
 	{% block content %}
 	{% endblock %}
 <div class="clear"></div>
 
-
+</div>
+<div class="clear"></div>
 <!--------Author Section Begin------->
 	<div class="footer">
-		<div class="outer">
-			<div class="copyright-line">
-				<div class="copyright-left"> Terms of Use & Privacy</div>
-				<div class="copyright-right">Copyright © 2017 WorldHRHub. All rights reserved.</div>
+<div class="outer">
+<div class="foot-left">
+<div class="logo">
+{% if user.is_authenticated %}
+	<a href="{% url 'profile' pk=user.pk %}"><img src="/../static/images/hr-logo.png"></a>
+	{% else %}
+	<a href=""><img src="/../static/images/hr-logo.png"></a>
+	{% endif %}
+</div>
 
-			</div>
-		</div>
-	</div>
+
+</div>
+<div class="foot-mid">
+<h3>Email Newsletter</h3>
+<p>Subscribe to receive inspiration, news, and ideas in your inbox.</p>
+<input type="text" placeholder="Enter your email address"/>
+<a href="#" class="btn">SUBSCRIBE</a>
+</div>
+<div class="foot-right">
+<a href="http://dscript.pythonanywhere.com/pages/about_us/"><h3>About Us</h3></a>
+<ul>
+<li><a href="#" class="link">Contact Us</a></li>
+<li><a href="http://dscript.pythonanywhere.com/pages/terms_and_conditions/" class="link">Terms of Use</a></li>
+<li><a href='http://dscript.pythonanywhere.com/pages/privacy/'class="link">Privacy Policy</a></li>
+</ul>
+</div>
+<div class="foot-ban">
+	<h3>Connect with us</h3>
+	<ul>
+<li class="facebook">
+<a href="#"><i class="fa fa-facebook"></i></a>
+</li>
+<li class="twiter">
+<a href="#"><i class="fa fa-twitter"></i></a>
+</li>
+</ul>
+</div>
+<div class="clear"></div>
 <!--------Author Section End--------->
 
 <!--<div id="popup1" class="pop-modal-box">
@@ -103,11 +142,10 @@
 </div>-->
 
 
-</section>
 
 
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
+<script src="/static/js/script.js"></script>
 <script>
 
 

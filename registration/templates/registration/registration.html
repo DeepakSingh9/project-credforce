@@ -16,13 +16,12 @@
 <form class="login-form" action="{% url 'registration' %}" method="POST" id="post-form">
     {% csrf_token %}
     <ul>
-
+    <li><input type="text" placeholder="username" name="username"></li>
     <li><input type="password" placeholder="password" name="password"/></li>
     <li><input type="text" placeholder="first name" name="first_name"/></li>
     <li><input type="text" placeholder="last name" name="last_name"/></li>
       <li><input type="email" placeholder="email" name="email"/></li>
     <li><input type="text" placeholder="designition" name="designation"/></li>
-
     <li><input type="text" placeholder="organisation" name="organisation"/></li>
         </ul>
     <button type="submit" value="save">save my details</button>

@@ -6,84 +6,77 @@
 <!--------Slide Section Begin--------->
 	<div class="banner banner2">
 		<div class="outer">
-<h1>Let's get started & Welcome to HR Hub</h1>
-			<div class="right-login">
-
-
-                    <div class="inner-section">
-
-                   <div><div class="login-form">
+			<div class="ban-text">
+<h1>Grow. Network. Influence</h1>
+			<h4>Join the most elite community of rising HR professionals</h4>
 </div>
-</div>
-						<div>
-							<div class="login-form">
     <div class="form">
         <h3>JOIN HR HUB</h3>
 
-<form class="login-form" action="{% url 'registration' %}" method="POST" id="post-form">
+<form action="{% url 'registration' %}" method="POST" id="post-form">
     {% csrf_token %}
-    <ul>
+
 {% if messages %}
 		{% for message in messages %}
 		<p class="form-error">{{message}}</p>
 		{% endfor %}
 		{% endif %}
-
-		<li><input type="email" placeholder="email" name="email"/></li>
-    <li><input type="password" placeholder="password" name="password"/></li>
+		<!--<li><input type="text" placeholder="username" name="username"/></li>-->
+<ul>
+	<li><input type="text" placeholder="username" name="username"/></li>
     <li><input type="text" placeholder="first name" name="first_name"/></li>
     <li><input type="text" placeholder="last name" name="last_name"/></li>
-
+	<li><input type="email" placeholder="email" name="email" /></li>
+	<li><input type="password" placeholder="password" name="password"/></li>
+    <li><input type="text" placeholder="designation" name="designation"/></li>
     <li><input type="text" placeholder="organisation" name="organisation"/></li>
+    <li class="checkline"><input type="checkbox"/><p>I agree to terms & Services</p></li>
 
-<li class="checkline"><input type="checkbox"/><p>I agree to terms & Services</p></li>
-    <button type="submit" value="save">sign up</button>
-	</ul>
+</ul>
+	<button type="submit" value="signup">sign up</button>
 </form>
     </div>
+			<div class="clear"></div>
 </div></div>
 
-<div class="clear"></div><br>
-
-</div>
 <div class="clear"></div>
-</div>
 
-		</div>
-	</div>
+
+
+
 <!--------Slide Section End--------->
 
 	<div class="clear"></div>
 <!--------Product Section Begin--------->
 	<div class="product">
 		<div class="outer">
-		<h2>Lorem Ipsum is simply dummy text</h2>
-		<p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+		<h2>WorldHRhub, the best of Knowledge and Networking</h2>
+		<p class="para">One of the massive and most diverse global HR community of active HR professionals, managers, Business Partners and CHROs and growing. Join the community that is changing the face of HR transformation worldwide. News and Insights, industry connect and resources. Curious?Join HR Hub today.</p>
 		<br><br>
 			<div class="pd-circle1">
 				<ul>
 					<li>
-					<img src="../static/images/multimedia.png">
+					<img src="../static/images/network.png">
 					<h4>Network</h4>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					<p>Introduce and Interact with an active community of global HR leaders.</p>
 					</li>
 
 					<li>
-				<img src="../static/images/multimedia.png">
+				<img src="../static/images/publish.png">
 					<h4>Publish Article</h4>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					<p>Be seen, be heard, be noticed! World HR Hub is the gateway to the new dimension of HR Management in the digital era.</p>
 					</li>
 
 					<li>
-				<img src="../static/images/multimedia.png">
+				<img src="../static/images/influence.png">
 					<h4>Engage</h4>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					<p>Get your noticed by veterans of the profession and propel yourself to the forefront of the global HR community.</p>
 					</li>
 
 					<li>
-					<img src="../static/images/multimedia.png">
+					<img src="../static/images/engage.png">
 					<h4>Influence</h4>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+					<p>Grow your reputation. Be followed, become an influencer and learn from the very best.</p>
 					</li>
 				</ul>
 			</div>
@@ -95,105 +88,77 @@
 
 	<div class="clear"></div>
 <!--------Blog-Article Section Begin------->
-		<div class="outer">
-	<div class="blog-article">
+<div class="baked-section">
+<div class="outer">
+<h2>Fresh Baked</h2>
+	{%for post in posts %}
+<div class="outimg-blog bloged">
 
 
-			<div class="article-left">
-			<h2>Fresh Baked</h2>
-				<ul>
-                   {% for post in posts %}
-					<li class="li-post"><a href="{% url 'post_detail' slug=post.slug pk=post.pk %}"><img src="{{post.image.url}}"><h4>{{post.title|truncatewords:6}}</h4></a>
-						{% endfor %}
-					<!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li><li><a href="#"><img src="static/images/blog2.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-					<li><a href="#"><img src="static/images/blog3.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-					<li><a href="#"><img src="static/images/blog4.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-				</ul>
-				<div class="clear"></div><br>
-				<ul>
-					<li><a href="#"><img src="static/images/blog5.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-					<li><a href="#"><img src="static/images/blog6.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-					<li><a href="#"><img src="static/images/blog7.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>
-					<li><a href="#"><img src="static/images/blog8.jpg"><h3>Lorem Ipsum</h3>
-					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p></a></li>-->
-				</ul>
-			</div>
+	<div class="bloggedimg">
 
-			<div class="article-right">
-				<h4>Sponsored</h4>
-				<img src="static/images/sopnser.jpg">
-			</div>
-		<div class="clear"></div>
-		</div>
+	<img src="{{post.image.url}}" style="width:100%"/>
+		<div class="tag-section">
+<span class="tag tech">{{post.category}}</span>
+<div class="clear"></div>
+</div>
 	</div>
+
+<div class="blogedcont">
+	<h3><a href="{% url 'post_detail' slug=post.slug pk=post.pk %}">{{post.title}}</a></h3>
+<p>{{post.text|truncatewords:15}}
+</p>
+<div class="editor-pik">
+	<div class="user-img"><img src="{{post.author.profile.profile_image.url}}" /><h6><a href="{% url 'profile' pk=post.author.pk %}">{{post.author}}</a></h6></div>
+<div class="calender"><i class="fa fa-calendar-o"></i> 4 weeks ago</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+	{% endfor %}
+
+
+</div>
 <!--------Blog-Article Section End--------->
 
 <div class="clear"></div>
 <!--------Author Section Begin------->
-	<div class="author">
-		<div class="outer">
-		<div class="author-left">
-		<h2>Authors of the Month</h2>
-			<ul>
-				{% for topu in topuser %}
-				{% if topu.profile.profile_image %}
-
-				<li class="authl"><a href="{% url 'account' pk=topu.id %}"><img src="{{topu.profile.profile_image.url}}">
-{% endif %}
-<div class="card-desc">
-					<span class="title"><b>{{topu.first_name}}</b></span>
-<div class="clear"></div>
-					<div class="desc"><span class="left">Designation:</span><span class="right">{{topu.profile.designation}}</span>
-					<div class="clear"></div>
-					</div>
-
-					<div class="org"><span class="left">Organisation:</span><span class="right">{{topu.profile.organisation}}</span>
-					<div class="clear"></div>
-					</div>
-
-					<div class="post"><span class="left">Posts:</span><span class="right">{{topu.post_set.all.count}}</span>
-					</div>
-	<span class="smallbtn" href="{% url 'follow' pk=topu.id %}">Follow</span>
-					<div class="clear"></div>
-					</div>
+	<div class="clear"></div>
+</div>
 
 
 
+<div class="person">
+<div class="outer">
+	<h2>Authors of the Month</h2>
 
-
-            <!--followed by:{{topu.profile.followed_by.count}}</span></li>-->
-					</a>
-</li>
-
-
-				{% endfor %}
-				<!--<li><a href="#"><img src="static/images/author.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author1.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author2.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author3.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author4.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author5.jpg"></a><span>Lorem Ipsum</span></li>
-				<li><a href="#"><img src="static/images/author6.jpg"></a><span>Lorem Ipsum</span></li>-->
-			</ul>
-				<div class="clear"></div>
-		</div>
-		</div>
-			<div class="clear"></div>
+<div class="person-list">
+			{% for topu in topuser %}
+<div class="person-desc">
+	{% if topu.profile.profile_image %}
+<a href="{% url 'account' pk=topu.id %}"><img src="{{topu.profile.profile_image.url}}" /></a>
+	{% endif %}
+	<div class="tagone">
+<a href="{% url 'account' pk=topu.id %}"><h4>{{topu.first_name}}</h4></a>
+<h5>{{topu.profile.designation}}</h5>
+<h6>Working at {{topu.profile.organisation}}</h6>
 	</div>
-<!--------Author Section End--------->
 
-<div class="clear"></div>
-<!--------Author Section Begin------->
+<a href="{% url 'account' pk=topu.pk %}" class="share"><i class="fa fa-share"></i></a>
+<div class="posts"><span>{{topu.post_set.count}}</span> Posts</div>
+
+</div>
+	{% endfor %}
+
+	<div class="clear"></div>
+</div>
 
 
-</section>
+</div>
+	</div>
+	{% endblock %}
 
-{%endblock%}
+
+
 
 

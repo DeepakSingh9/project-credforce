@@ -1,41 +1,26 @@
 {% extends 'blog/base.html' %}
 {% load staticfiles %}
 {% block title %}{{post.title}}{% endblock %}
-<!--<!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Document</title>
-<!--for shortcut icon
-<link rel="icon" href="#" type="image/x-icon" />
-<link rel="shortcut icon" href="#" type="image/x-icon" />
-<link rel="apple-touch-icon" href="#" />
-<link href="css/Style.css" type="text/css" rel="stylesheet">
-<script src="js/jquery.js"></script>
-<script src="js/accordion.js"></script>
-</head>-->
-
-
 {% block content %}
 <!--<header>
 <div class="outer">
-		<div class="logo"><a href="#"><img src="images/logo.png"></a></div>		
+		<div class="logo"><a href="#"><img src="images/logo.png"></a></div>
 		<div class="my-profile">
 		<div class="search-left">
 			<ul>
 			<form>
 				<input data-val="true" data-val-length="" data-val-length-max="40" data-val-length-min="1"  name="Search" placeholder="Search here..." value="" type="text">
 			</form>
-				<li><a class="search" href="" title="Login"><i class="fa fa-search"></i></a></li> 
+				<li><a class="search" href="" title="Login"><i class="fa fa-search"></i></a></li>
 			</ul>
-		</div>	
-		
+		</div>
+
 		<div class="search-right">
-			<ul>      
-				<li><a class="request" href="" title="Login"><i class="fa fa-user"></i></a></li>			
+			<ul>
+				<li><a class="request" href="" title="Login"><i class="fa fa-user"></i></a></li>
 				<li><a class="profile" href="" title="profile"><i class="fa fa-envelope"></i></a></li>
-				<li><a class="message" href="" title="Login"><i class="fa fa-bell"></i></a></li> 
-				<li><a class="notification" href="" title="My Profile">My Profile</a></li> 
+				<li><a class="message" href="" title="Login"><i class="fa fa-bell"></i></a></li>
+				<li><a class="notification" href="" title="My Profile">My Profile</a></li>
 			</ul>
 		</div>
 		</div>
@@ -44,7 +29,7 @@
 </header>-->
 
 
-<section class="home">
+
 <!--------post Section Begin------->
 		<div class="outer">
 
@@ -56,9 +41,9 @@
 					{% endif %}
 <div class="maindesc">
 <div class="title">
-<span class="name">{{post.author.first_name}}</span>
+<a href="{%url 'account' pk=post.author.pk %}"><span class="name">{{post.author.first_name}}</span></a>
 <a class="link" href="{%url 'follow' pk=post.author.pk %}">Follow</a>
-<p>{{user.profile.designation}}, {{user.profile.organisation}}</p>
+<p>{{post.author.profile.designation}}, {{post.author.profile.organisation}}</p>
 </div>
 <p>Author of novels TOUCH and I AM HAVING SO MUCH FUN HERE WITHOUT YOU. Lover of caftans and intelligence. Product namer for MAC.</p>
 <span class="date">Dec 13,2017</span>
@@ -71,12 +56,16 @@
 
 <div class="post-page">
 <div class="outer">
-<div class="post-tile">
-<img src="{{post.image.url}}"/>
-<div class="postmention">
-<h3>{{post.title}}</h3>
+<div class="post-tile mentiontile">
+
+	<h3>{{post.title}}</h3>
 <div class="line"><span>{{post.created_date}}</span>.<span>3 Comments</span>.<span>1 Share</span></div>
+<img src="{{post.image.url}}"/>
+<div class="postmention ">
+
 <p>{{post.text}}</p>
+
+	<a href="">Like</a>
 <p></p>
 <div class="clear"></div>
 </div>
@@ -84,155 +73,39 @@
 </div>
 <div class="clear"></div>
 <div class="comment-section">
-<h5><span>2</span> Comments</h5><br/>
+<h5><span>{{post.comments.all.count}}</span> Comments</h5><br/>
+	{% for comment in post.comments.all %}
 <div class="coment-list">
-<img src="user.png"/>
+<img src="{{comment.name.profile.profile_image.url}}"/>
 <div class="comment-text">
-<h6><span class="name">John Doe</span> <span class="date">20 April 2017</span></h6>
-<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+	<h6><span class="name"><a href="{% url 'account' pk=comment.name.pk %}">{{comment.name.first_name}}</a></span> <span class="date">{{comment.created}}</span></h6>
+<p>{{comment.body}}</p>
 </div>
 <div class="clear"></div>
 </div>
-<div class="coment-list">
-<img src="user.png"/>
-<div class="comment-text">
-<h6><span class="name">John Doe</span> <span class="date">20 April 2017</span></h6>
-<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-</div>
+	{% endfor %}
 <div class="clear"></div>
-</div>
-<div class="clear"></div>
+	<!-------------comment form--------------->
 <div class="leave-comment">
-<h5>Leave a Comment</h5><br/>
+<h5>Leave a Comment</h5>
+	<form action="{% url 'comment' pk=post.pk %}" method="POST">
+		{% csrf_token %}
 <ul>
-<li><input type="text" placeholder="Name"/></li>
-<li><input type="text" placeholder="Email"/></li>
-<li class="textar"><textarea placeholder="Message"></textarea></li>
+<li class="textar"><textarea name='body' placeholder="Your comment Here"></textarea></li>
 </ul>
-<a href="#" class="btn">Send Message</a>
-<div class="clear"></div>
-</div>
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-<!--
-
-			<div class="add-post">
-			
-			<div class="left">
-			<div class="userprofile">			
-				<a class="message profile-align" href="{%url 'account' pk=post.author.pk %}" title="Login"><img src="{{post.author.profile.profile_image.url}}"></a>
-				<span class="user-name">
-				{{post.author.username}}<br>
-				{{post.author.profile.designation}}</span>
-				<div class="clear"></div>
-			</div>	
-			</div>
-			
-			<div  class="right">
-				<h3>{{post.published_date}}</h3>
-			</div>
-			
-			<div class="clear"></div>
-		</div>
-		</div>	
-<!--------Slide Section End--------->
-<!--
-<div class="clear"></div>
-	
-<div class="author-summary">
-	<div class="outer">
-		
-		<div class="outer-summary">
-		<h2>{{post.title}}</h2>
-		<div class="post">
-				<ul>
-					<li>
-					<div><img src="{{post.image.url}}" alt=""></div>
-					
-					<div class="actions">			  	
-				  	<div class="post-options">
-				  		<span><a class="icon-info" href="" title="Login"><i class="fa fa-thumbs-up"> 30</i></a></span>
-					  	<span><a class="icon-info" href="" title="Login"><i class="fa fa-envelope"> 12</i></a></span>
-					  	<span><a class="icon-info" href="" title="Login"><i class="fa fa-reply"> 3</i></a></span>
-					</div>	
-					<div class="clear"></div>				 	
-					</div>
-					
-					<div class="post-content">						
-						<h3></h3>
-						<p>{{post.text}}
-						</p>				
-						
-					<form class="adPost">
-						<textarea name="txtArea" placeholder="Comment.."></textarea>
-							<div class="clear"></div>		
-					</form>
-						
-					<div class="adlinks">				
-							<input value="Add Post" type="button">
-					</div><br>
-						
-					<div class="user">
-						<div class="userprofile">			
-							<a class="message profile-align" href="" title="Login"><img src="images/author2.jpg"></a>
-							<span class="user-name">
-							Stacy Kerber<br>
-							Sr. Talent Manager</span>
-							<div class="clear"></div>
-						</div><br>						
-						
-						<div class="user-ping"><h4>Excelent Article</h4></div>
-						<div class="post-author">
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-thumbs-up"> 30</i></a></span>
-							<span><a class="icon-info" href="" title="like"><i class="fa fa-envelope"> 12</i></a></span>
-							<span><a class="icon-info" href="" title="dislike"><i class="fa fa-reply"> 3</i></a></span>				  	
-						</div><br>
-						<div class="comment">							
-							<h2>Sign up to comment or share</h2>
-						</div>
-						<div>{% include 'blog/comment.html' %}</div>
-
-					</div>
-					</div>
-					<div class="clear"></div>
-					
-					
-					
-					</li>
-				</ul>
-				<div class="clear"></div>
-		</div>	
-		
-	
-		
-		</div>		
-	</div>
-	
-</div>
-
-	
+<button type="submit" class="btn">post comment</button>
+		</form>
 
 <div class="clear"></div>
-<!--------Author Section Begin------->
-	<!--<div class="footer">
-		<div class="outer">
-			<div class="copyright-line">
-				<div class="copyright-left">Terms of Use & Privacy</div>
-				<div class="copyright-right">Copyright © 2017 DASCA. All rights reserved.</div>				
-			</div>
-		</div>
-	</div>
-<!--------Author Section End--------->
-</section>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</div>
 
 {% endblock %}

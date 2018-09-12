@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post,Category,Like,Comment
+from .models import Post,Category,Like,Comment,SmallPost
 
 
 
@@ -17,9 +17,13 @@ class LikeAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     fields=['post','name','body']
 
+class SmallPostAdmin(admin.ModelAdmin):
+    fields=['text','writer']
+
 admin.site.register(Post,PostAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Like,LikeAdmin)
 admin.site.register(Comment,CommentAdmin)
+admin.site.register(SmallPost,SmallPostAdmin)
 
 
